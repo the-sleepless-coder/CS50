@@ -43,8 +43,7 @@ Throughout the course, I learned fundamental computer science concepts including
 * Sorting Algorithms
 * Recursion
 
-* To dos:
-* Merge Sort
+* To dos: Merge Sort
 
 ### Lecture 4 - Memory Management
 
@@ -62,8 +61,7 @@ Throughout the course, I learned fundamental computer science concepts including
 * Hash Table
 * Binary Search Tree
 
-* To dos:
-* Trie
+* To dos: Trie
 
 ---
 
