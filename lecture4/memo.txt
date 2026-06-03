@@ -1,0 +1,309 @@
+#memory
+bitmap image
+
+color picker
+3byte(24 bit)
+
+hexademical 
+(16진수)
+
+read it as a hexademical
+0x00 = 0
+0x01 = 1
+...
+0x0A = 10
+...
+0x10 = 17
+
+integers are stored in the form of 32bits which are stored in hexadecimal format
+
+#참조, 역참조
+&(reference, ampersand): address of the variable
+*(dereference): follow the address and see what the variable is
+
+%p: print pointers(addresses)
+
+pointer : a variable that stores the address of something
+
+addresses are 64 bits(8bytes)
+so that we can label each memory location to access the spots
+
+#data structures
+build things in computer memory
+fancier structures than arrays
+one, two dimensional arrays
+
+p(storing an address) = address 0x123
+address 0x123  = value 50 
+
+# string
+the keyword string is madeup for convenience
+
+string s = "HI";
+
+the strings are contiguous, specifically 1 byte apart
+char *s = "HI!";
+s is storing the first byte of the characters
+you can find the end by the nul character, without having to know the full characters within the string
+
+understand the high level and make things work
+taking a peek underneath the hood to see what actually happens
+
+so all we need to know is the first address of the string
+and till the end of the array, that is until we reach the nul, is where we find the end of the array
+
+typedef int integer;
+typedef can be as simple as that
+just used as naming something as integer
+
+typedef char * string;
+so in C if you wanted to use string you can just use typedef char* string
+
+// the strings are contiguous, specifically 1 byte apart
+// s is storing the first byte of the characters
+// you can find the end by the nul character, without having to know the full characters within the string
+
+// pointer s which includes a char in the address.
+char *s = "HI!";
+
+// getting the address of each of the characters
+// &s would mean to get the address of the pointer, which is a totally different thing.
+printf("%p \n", s);
+printf("%p\n", &s[0]);
+printf("%p\n", &s[1]);
+printf("%p\n", &s[2]);
+printf("%p\n", &s[3]);
+
+
+// pointer arithmetic
+// since pointers are numbers, you can just add numbers to it to access certain points
+// go to the address of the next byte to find the character in the given address that are 1byte apart
+// *(address): find value in the given address
+printf("%c\n", *s );
+printf("%c\n", *(s+1));
+printf("%c\n", *(s+2));
+
+
+// synctactic sugar
+// user friendly syntaxes that are used to express harder and weirder syntax
+// square brackets are used so that I don't need to use the address expressed in bytes 
+// char *s = "HI";
+// *(s+1)
+// s[1]
+
+
+// == 를 통해 비교하는 대상이 다르다
+// 숫자는 말 그대로 숫자를 비교하는 것이고, 
+// string은 시작하는 주소가 다른데 그것을 비교하기 때문에 다르다고 나오는 것이다.
+// 각 s, t 포인터 연산자가 갖고 있는 주소 값을 비교하는 것이기 때문에, 
+// 당연히 같은 문자열이 들어 있어도 주소값을 비교한 연산의 결과값이 다르게 나온다.
+/**
+int n = 50;
+int m = 50;
+
+// 숫자 자체가 같은지를 비교하는 연산
+if(n==m){
+    printf("%p\n", &n);
+    printf("%p\n", &m);
+    
+    printf("same number\n");
+}else{
+    printf("%p", &n);
+    printf("%p", &m);
+    
+    printf("different number\n");
+}
+
+return 0;
+* */
+
+char *s = get_string("s: ");
+char* t = get_string("t: ");
+
+// s, t의 시작 주소를 비교하는 연산
+// comparing 2 different addresses
+if(s==t){
+    printf("Same\n");
+}else{
+    printf("s: %p\n", &s);
+    printf("t: %p\n", &t);
+    
+    printf("Different\n");
+}
+
+// 8 bytes of memory for the pointer
+// additional bytes for the string
+
+
+#malloc(memory allocation)
+how many bytes of memory do you want?
+returning the address of the first chunk of memory
+
+free the memory back when you're done
+char *t = s;
+allocate n bytes and return the address of the start of the chunk of memory
+char *t = malloc(strlen(s) + 1);
+
+malloc can fail if you have too many memory that is already allocated,
+it may fail to return the starting address
+
+character 0 : NUL
+pointer 0 : NULL
+
+
+# Code defensively
+So the whole point is to think about what may go wrong,
+and you need to handle the problems otherwise the program will not work properly
+
+char *t = malloc(strlen(s) + 1);
+// if malloc fails to allocate memory, return 1
+if(t==NULL) return 1;
+
+if(strlen(t)>0){
+    t[0] = toupper(t[0]);
+}
+
+# Valgrind
+Using it to detect memory related errors
+
+it will give a caution when memory that aren't supposed to be are touched 
+
+or the amount of memory that is leaked will be shown so that you properly free memory
+
+#Scope
+because of the scope of a function, 
+something that has happened within a function may not affect the variables in main
+
+when you pass variables in a function you are passing by value
+copies of the values are passed in(copy of x and y)
+
+but no affect on the original version of x, y
+
+int main(void){
+    int x = 1;
+    int y = 2;
+
+    printf("x is %i, y is %i\n", x, y);
+    swap(x, y);
+    printf("x is %i, y is %i\n", x, y);
+    
+}
+
+void swap(int a, int b)
+{
+    // tmp에 a를 담아두고, 
+    // b에 tmp를 넣어둔다.
+    int tmp = a;
+    a = b;
+    b=tmp;
+
+}
+
+Java에서 StringBuilder가 main에서 바뀌는 이유는 primitive type은 값 자체가 복사돼서, main에서 변경이 안되는 것이다
+하지만 Stringbuilder는 객체의 주소값이 복사가 되기 때문에, main에서 값이 바뀌는 것이다. 
+ 
+물론 StringBuilder를 change함수 내에서 새롭게 생성하면 다른 주소값을 가리키기 때문에, main에 반영이 안된다.
+#1 primitive type
+void change(int x) {
+    x = 100;
+}
+
+public static void main(String[] args) {
+    int a = 10;
+    change(a);
+    System.out.println(a);
+}
+
+#2 class
+main(){StringBuilder s = new StringBuilder("old");
+change(s);
+
+System.out.println(s);}
+void change(StringBuilder sb) {
+    sb = new StringBuilder("new");
+}
+
+# how does a computer compile and run a program
+machine code : load machine code on top of the memory
+global variables : saving variables defined out of main
+heap memory: saving values using malloc is stored in heap memory
+grows downwards
+stack: works its way up in the memory
+anytime you call a function and use a local variable, it's saved in the stack 
+
+each function get's it's own chunk of memory
+main function local variables in it's own stack
+calls(swap function) -> has own local variables
+passing by value is eventually a copy of the variables
+
+because we 've only passed on the copies of the variables 
+when swap returns and ends the function, 
+the values of x,y are unchanged in main
+
+only the values are passed on, and the memory address of the values can't be accessed in pass by value
+so in order to change the value you need to pass the actual address of the values so that it can be changed
+
+# passing by reference(address)
+pass by value is logically correct, but you need to pass the address so that you can actually change the value in the given address
+
+
+
+pass by value를 할 수 밖에 없는 것은, 
+함수마다 자기만의 지역 변수 공간(stack)을 가지고 있기 때문에 복사한 값을 넘길 수 밖에 없어서 그렇다.
+그래서 애초에 저장된 주소 공간 자체가 다르기 때문에 값만 복사하고, 
+swap function에서 실행된 코드는 main function에 반영되지 않는다.
+
+primitive 변수라면 값 자체를 복사하고(동일한 값을 각자의 stack에 서로 다른 주소)
+Object인 객체라면 heap객체의 주소를 복사한다.(동일한 주소 값의 heap에서 같은 주소)
+
+그래서 java에서 primitive값을 main에서 호출해서 쓰면 pass by value를 하기 때문에 main에서 호출한 함수의 값이 변하지 않는 것이고, 
+객체는 heap에 있는 주소를 복사하기 때문에 동일한 주소값의 변수를 수정하기 때문에 바뀌는 것이다.
+
+
+scope 
+slice of memory at that memory in time
+
+when the function returns, stack may be left as garbage value in the given memory address
+
+
+#pass by reference
+int main(void){
+    int x = 1;
+    int y = 2;
+
+    // you need to pass on the address so that you can actually change the value in the given address
+    printf("x is %i, y is %i\n", x, y);
+    swap_ref(&x, &y);
+    printf("x is %i, y is %i\n", x, y);
+    
+}
+
+void swap_ref(int *a, int *b){
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+# heap/stack overflow
+heap and stacks may overflow when you don't keep track of the memory or not freeing the memory you've used
+
+buffer overflow 
+chunk of memory overflows over the buffer
+overflow the finite boundary of the buffer
+
+# crowd strike
+
+# buffers should be used and allocate only a finite amount of memory
+other wise if you allocate a bit amount of memory all the time it would be inefficient when receiving input in a certain form
+
+#file I/O
+C 
+fopen
+fclose
+fprintf
+fscanf
+fread
+fwrite
+fseek
+
+starts with f: deals with file

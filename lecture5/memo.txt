@@ -1,0 +1,183 @@
+#Data structures
+
+# Singly-Linked Lists
+# Doubly-Linked Lists
+# Stacks & Queues
+# Hash Tables
+# Trees
+# Tries
+# Data Structures
+
+# Data structures
+way to structure data in the memory
+array : same type back to back 
+need to structure the size of the array
+
+#Abstract data types
+ways of structuring information that don't rely on detailed implementation details,
+in a lower level using arrays etc.
+
+data structures : made with pointers, variables, functions 
+Abstract data types : broadly defined data types with certain features
+queues, stacks 
+Priority queue
+
+#Queue
+define a data type within a data type
+To be precise define a data type within a Abstract data type 
+
+#Abstract data types
+Organizing information that has certain properties, operations
+but you don't need to know how it's actually implemented in code
+
+Because it can be implemented in one way or the other, 
+in terms of the actual data structures that you are building.
+
+Queue, Stacks can be defined as same abstract data types, 
+but the actual implementation may be different according to how you would implement them.
+
+const int CAPACITY = 50;
+
+typedef struct
+{
+    char *name;
+    int height;
+    int weight;
+} person;
+
+typedef struct
+{
+    person people[CAPACITY];
+    int size; // save valid values in the queue
+} queue/stack
+
+
+#Resizing arrays
+when adding additional values to an array, 
+there are 2 options
+
+1,2,3
+1,2,3,4
+you can find the additional space and add the addtional 4
+Over allocating array so you never have to consider the problem again
+
+or find a place for the array where you can contiguously save the data from 1~4 and delete the original array
+but it would be costly to copy and delete the array every single time you do that.
+
+#Linked list
+If there is free space allocate the data in the given address,
+hence connect the addresses that are available so that you don't have to waste memory
+
+follow one pointer to another, to allocate data in different addresses
+
+#realloc
+leave data in their current locations,
+and add contiguous additional memory next to it.
+
+but you need to give the address of the chunk of memory that's to be reallocated.
+int *tmp = relloc(list, 4*sizeof(int));
+
+#Linked List
+using pointers to link things together in the computer's memory
+Adding a pointer so that each memory can point to the next address
+
+save the head of where the list starts
+
+pointers allows the memory to move from one address to another
+
+Fragmentation of memory
+
+down side of linking data together
+spending more space but gaining the flexibility of copying from smaller memory to memory
+
+but you can use fragments of memory with flexibility
+
+typedef struct node
+{
+    int number ;
+    node *next ; // address of the next node
+} node;
+
+
+#single linked list
+where one node points to another node, 
+but not the other way around
+
+검색, 조회는 당연히 O(N)
+삽입, 삭제는 O(1) 주소만 알면 연결 리스트의 연결 관계만 바꾸면 되니까
+그래서 삽입,삭제가 잦은 데이터를 쓸 때 유리하다. 
+반면 검색, 조회를 하는 경우에는 좋지 않다.
+
+#trees
+linked list = stitch nodes together in the memory
+
+stitch together nodes in the form of trees 
+
+linkedlist : linear left to right data structure
+binary search tree : two-dimensional data structure
+
+restructure an array so that it has nodes in the relationship of a child and parent,
+where the pointers point in the given relationship in the memory
+수직적인 관계라고 볼 수 있지만, 
+한 노드에서 다른 노드로 가는 주소관계를 각 노드에서부터 분기로 처리했다고 볼 수 있다.
+-> tree
+
+-Balancing trees
+노드를 삽입하는 순서에 따라 트리의 균형이 맞지 않을 수 있어서,
+트리의 균형을 잡아가는 과정이 필요하다.
+
+BST에 1~6을 차례대로 넣으면 일반적인 Linked List가 되고, 
+탐색에 대한 시간 복잡도는 O(logN) -> O(N)이 된다.
+
+따라서 노드가 삽입되는 순서에 따라 트리의 균형을 맞추기 위해서는,
+트리의 균형을 맞춰주는 작업을 거쳐야 O(logN이) 될 수 있다.
+
+# Dictionary (ADT)
+key : values
+
+# Hash Table (specific way to implement a dictionary)
+Hash function 
+allows you do decide where some values go into memory
+
+bucketize the value in a certain location to find it quickly
+take a large domain and map it to a smaller range of values
+
+
+large domain (input) -> hash function -> finite range of value 
+
+combination of an array and linked list together
+
+using the bucket as key
+and in the key you put in the value as a linked list
+to prevent the same buckets having the same value, you need a linked list in order to prevent that from happening
+
+In the worst case scenario, 
+time complexity could lead to O(N) 
+
+So essentially N pointers to the start of a linked list,
+is what you could say a hash table is
+
+To reduce the probability of collisions,
+you can increase the number of buckets in order to do so
+(ex. look at the first 3 letters of the name)
+
+But the downside would be that it would take more space
+(some memory spaces would not be used and hence lead to the waste of it)
+
+The average time complexity would be 
+O(N/K)
+K = number of buckets
+
+Considering the amount fo names you would put and the size of the bucket K
+you woule be able to design a hash function that has a time complexity close to O(1)
+
+if you design the buckets so that there could be an average of more than 1 linked list,
+the time complexity of the hash table would increase(bigger than 1)
+
+
+#Trie
+space to store all of the arrays
+even if the alphabtes are not used
+
+But by using more space you can significantly decrease the time of insert/search of the name 
+by O(N)

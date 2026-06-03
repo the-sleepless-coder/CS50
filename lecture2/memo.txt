@@ -1,0 +1,138 @@
+## compiler
+source code -> compiler -> machine code
+compiler : Step by step instructions that can change source code to machine code embodied in a program
+which are different according to each CPU
+
+make : automates the process of compiling
+
+make -> runs clang
+./ a.out (assembly out)
+
+Through the CLI you can add arguments, to compile the source code
+
+make hello
+clang -o hello hello.c
+make the output of hello.c to to hello, with the source code hello.can
+
+## what process does compiling go through 
+preprocessing -> compiling -> assembling -> linking 
+
+-preprocess : copy pastes the code that's used in the code that you're compiling
+preprocessor directive (starts with #)
+#include <cs50.h>, #include<stdio.h>
+
+-compile : translated from C -> Assembly code
+the CPU runs instructions of assembly code that are changed from source code
+
+-assembling : change assembly code -> machine code
+
+-linking : linking the files from preprocessing directive and main 
+hello.c/cs50.c/stdio.c
+thus linking all the preprocessed / main files that are compiled and assembled to a single program
+
+## decompiling
+can machine code be decompiled to source code?
+thus can machine code be reverse engineered to source code?
+
+## harvard mark -1
+mark-2: a real bug that was in the machine
+popularized when referring about an error that arises in the code
+
+## debugging
+when prompting in a number the variable has the number that was used before
+that is known as garbage value
+
+step into the function so that you can see what's happening within the function 
+as you step over and proceed to the next code, 
+you can see the variables change and hence watch how the code works and debug the code
+
+## types
+computers are 0,1 
+photoshop : 0,1 should be treated as colors
+
+bool(1byte): technically need 1bit
+int(4byte): 2^32(if includes minus value: -2 bil ~ 2bil)
+long(8byte): bigger integers using more bits
+float(4byte): real numbers with decimal points
+double(8byte)
+
+char(1byte)
+string
+
+## storing data
+data are stored backed to back in terms of memory address
+at least in terms of virtual address
+the physical memory of the data may be different
+
+#Array
+sequence of values back to back contiguous in memory
+all of which are the same data type 
+
+By jumping into the given index you can find the data you've stored in the Array
+
+# &(참조) / * 역참조 
+&: 값을 통해서 주소값을 찾는 것이 참조
+
+*: 주소값을 통해서 값을 찾는 것이 역참조
+
+```
+int x = 10;
+int *p = &x;
+
+*p = 30;
+```
+
+그러니까 여기에서 int *p = &x 여기서는 포인터 변수를 선언한 것이고,
+*p 를 했을 때나 역참조를 해서 주소값을 이용해 값을 찾는거잖아
+
+
+#Chars/Strings
+char : single characters represented by numbers
+string : sequence of characters
+Or basically it can be called an array of characters
+that are saved backed to back in a form of an array
+
+To know where the string actually ends, 
+it has an additional byte that is filled with 0 to indicate the end of the array
+or as to say the end of the whole series of continguous elements
+(also known as a sentinel value that shows where the array ends: \0)
+which is called nul ( with one l )
+
+all 0 bits to show where the array ends
+
+when you declare a type as string, 
+it adds the nul byte to show where the given data ends
+
+when you add double quotes that where the additional nul byte is added, 
+to show where the sequence of characters end.
+
+characters are distinguished by a single quote,
+and thereby doesn't need a nul to show where it ends
+
+printf does exactly that job of printing the characters till the end of the stream of characters.
+
+StringBuilder sb = new StringBuilder();
+while(s[n] != '\0'){
+    printf("%s",s[n])'
+}
+
+
+# command line arguments
+command line arguments can be used in the main function, 
+so that you can include arguments when you run the program
+
+
+# Exit status
+programs can return numbers
+to show whether something has succeeded or failed
+
+#Encrpytion
+secret key 
+plain text -> cipher -> cipher text
+
+1   
+'HI' -> CIPHERING ALGORITHMS -> 'IJ'
+
+decrypt
+
+deciphering teh ciphered text
