@@ -99,6 +99,9 @@ void maketable(char *names[], int count, node *table[])
         // 할당된 노드에 이름 입력
         // 기존 table에 있는 노드를 next node로 포인터를 이어주고,
         // table에 새로운 노드를 삽입.
+
+        // 기존 테이블에 노드가 없다면 null이 next이고, 
+        // 기존 테이블에 값이 있다면 해당 노드를 다음 노드로 잡는다.
         strcpy(newnode->name, names[i]);
         newnode -> next = table[idx];
         table[idx] = newnode;

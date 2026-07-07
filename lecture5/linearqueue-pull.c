@@ -16,6 +16,7 @@ typedef struct
     int size;
 }queue;
 
+
 void init(queue *q)
 {
     q->front = 0;
@@ -25,7 +26,7 @@ void init(queue *q)
 
 bool is_empty(queue *q)
 {
-    return q->size == 0;
+    return q->size == 0 ;
 }
 
 bool is_full(queue *q)
@@ -37,7 +38,7 @@ void enqueue(queue *q, int value)
 {
     if(is_full(q))
     {
-        printf("Queue is full \n ");
+        printf("Queue is full: %d \n ", value);
         return;
     }
 
@@ -69,8 +70,8 @@ int dequeue(queue *q)
         q->items[i] = q->items[i+1];
     }
 
-    q->rear --;
-    q->size --;
+    q->rear--;
+    q->size--;
 
     return value;
 }
@@ -104,11 +105,8 @@ int main(void)
     enqueue(&q, 20);
     enqueue(&q, 30);
     enqueue(&q, 40);
-    printqueue(&q);
-    
     enqueue(&q, 50);
-    enqueue(&q, 60);
-
+    
     printqueue(&q);
 
     
@@ -120,6 +118,10 @@ int main(void)
     printqueue(&q);
 
     enqueue(&q, 60);
+    enqueue(&q, 70);
+    enqueue(&q, 80);
+    enqueue(&q, 90);
+    
     printqueue(&q);
 
     return 0;

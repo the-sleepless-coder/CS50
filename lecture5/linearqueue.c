@@ -77,21 +77,19 @@ void printqueue(queue *q)
 
     int front = q->front;
     int rear = q->rear;
-    for(int i=front; i<rear; i++)
+    for(int i=front; i<q->rear; i++)
     {
-        printf("%d ", q->items[i]);
+        // printf("num: %d %p / ", q->items[i] , (void*)&q->items[i]);
+        printf("%d /", q->items[i]);
+        printf("front=%d rear=%d size=%d\n", q->front, q->rear, q->size);
     }
 
     printf("\n");
 }
 
-// circular
-// linked list
-
 // problem set 4,5
 // data structure 구현.
 
-// 자바로 짜보기.
 int main(void)
 {
     // queue 초기화
@@ -102,11 +100,7 @@ int main(void)
     enqueue(&q, 20);
     enqueue(&q, 30);
     enqueue(&q, 40);
-    printqueue(&q);
-    
     enqueue(&q, 50);
-    enqueue(&q, 60);
-
     printqueue(&q);
 
     
@@ -115,10 +109,10 @@ int main(void)
     {
         printf("dequeue: %d \n", dequeue(&q));
     }
-
     printqueue(&q);
 
     enqueue(&q, 60);
+    enqueue(&q, 70);
     printqueue(&q);
 
     return 0;
